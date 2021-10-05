@@ -23,6 +23,7 @@ int test(int n) {
 // main
 int main()
 {
+    /*
     // declare variable
     int max_n = 0, min_count = 1000;
     // work loop
@@ -35,7 +36,26 @@ int main()
         }
     }
     // print answer for number 2
-    printf("\n%i\n",max_n);
+    printf("\n%i\n",max_n);*/
+
+    long int k_n,sum;
+    int k, n=0, error=0;
+    // read from console
+    scanf("%i", &k);
+
+    while (!error) {
+        sum = 0;
+        for (int u=1;u<=k&&(!error);u++) {
+            // возводим в степень
+            k_n = u;
+            for (int i=1;i<n&&(!error);i++) {
+                k_n*=u;
+                if (k_n<0) error = 1; // +
+            }
+            // суммируем
+        }
+        error = 1;
+    }
     // end
     return 0;
 }
