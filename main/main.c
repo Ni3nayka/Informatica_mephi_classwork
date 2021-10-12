@@ -6,45 +6,31 @@
 int main()
 {
     // declare variable
-    long int last_sum=0,sum;
-    int k, n=-1, error=0;
+    int a[3],x,y,x1;
     // read from console
-    scanf("%i", &k);
-    // operating
-    while (!error) {
-        n++;
-        sum = 0;
-        for (int u=1;u<=k&&(!error);u++) {
-            // возводим в степень
-            long int k_n = u; // k в степени n
-            if (!n) k_n = 1; // 0-ивая степень
-            else {
-                for (int i=1;i<n&&(!error);i++) {
-                    long int k_n_s = k_n; // для умножения вручную
-                    //k_n*=u;
-                    for (int w=1;w<u&&(!error);w++) { // k_n*=u;
-                        k_n+=k_n_s;
-                        if (k_n<0) error = 1;
-                    }
-                    //if (k_n<0) error = 1;
-                }
-            }
-            //printf("%i+",k_n);
-            // суммируем
-            if (!error) {
-                sum+=k_n;
-                if (sum<0) error = 2;
+    scanf("%i %i %i", &a[0], &a[1], &a[2]);
+    scanf("%i %i", &x, &y);
+    // number 1
+    // sort
+    for (int i=0; i<3; i++) {
+        for (int j=0; j<3-i; j++) {
+            if (a[j]>a[j+1]) {
+                int temp=a[j];
+                a[j] = a[j+1];
+                a[j+1] = temp;
             }
         }
-        //printf("\n");
-        if (!error)last_sum = sum;
     }
-    //printf("========================\n");
-    // output
-    printf("%i\n",last_sum);
-    printf("%i\n",n?n-1:n); // если нуливая степень, не вычитаем степень "переполнения"
-    if (error==1) printf("*\n");
-    else printf("+\n");
+    if (a[0]==a[1]&&a[1]==a[2]) printf("equal\n");
+    else {
+        if (a[1]==a[2]) printf("%i two\n",a[2]);
+        else printf("%i\n",a[2]);
+    }
+    // number 2
+    x1 = sqrt(abs(250*250-y*y));
+    x = abs(x);
+    if (x<250&&x>0 && (y>0&&y<250&&x>x1 || y<0&&y>-250&&x<x1&&x>y+250)) printf("inside\n");
+    else printf("outside\n");
     // end
     return 0;
 }
