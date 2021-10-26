@@ -1,22 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-double summand(unsigned long int n) {
-    return ((double)1)/(n*(n+1)) ;
+double function(double x) {
+    return x-log(x)-2;
 }
 
-void add(int n, double *S) {
-    for (int N=1; N<=n; N++) {
-        *S += summand(N);
-        //printf("%i %0.16f\n",N,summand(N));
-    }
+double abs1(double x) {
+    return x>0?x:-x;
 }
 
 int main() {
-    double sum = 0.0;
-    int n = 0;
-    scanf("%i", &n);
-    add(n,&sum);
-    printf("%.8f\n%.8f\n%.8f\n",1.0,sum,1.0-sum);
+    double a=1.0,b=5.0,c=0.0;
+    while (abs1(function((a+b)/2))>0.00000001) {
+        c = (a+b)/2;
+        if (function(c)<0) a = c;
+        else b = c;
+    }
+    printf("%1.8f\n",(a+b)/2);
     return 0;
 }
