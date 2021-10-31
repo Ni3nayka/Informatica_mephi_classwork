@@ -1,5 +1,5 @@
 # Informatica_mephi_classwork
-classwork and homework
+### classwork and homework
 
 # Structure
 ### main - the folder where the code that is currently under development is stored
