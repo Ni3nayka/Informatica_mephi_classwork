@@ -2,24 +2,29 @@
 #include <stdlib.h>
 #include <math.h>
 
-int function(double a, double b, double c, double *S, double *P) {
-    if (a<0||b<0||c<0) return 1;
-    if (a>b+c||b>c+a||c>a+b) return 3;
-    *P = (a + b + c)/2.0;
-    if (a==b+c||b==c+a||c==a+b) *S=0;
-    else *S = sqrt((*P)*(*P-a)*(*P-b)*(*P-c));
-    *P *= 2.0;
-    if (a==b+c||b==c+a||c==a+b) return 2;
-    return 0;
+#define V_pyramid(h,a) (1.0/3.0*(double)S_hexagon(a)*(double)h)
+#define S_hexagon(a) (3.0*sqrt(3.0)/2.0*(double)a*(double)a)
+#define abs(a) ((double)a>1.0?(double)a-1.0:1.0-(double)a)
+#define pifagor(a,b) sqrt((double)((double)a*(double)a+(double)b*(double)b))
+#define S_all(h,a) S_gerona((double)pifagor(h,a),(double)pifagor(h,a),(double)a)*6.0+(double)S_hexagon(a)
+
+double S_gerona(double a, double b, double c) {
+    double p = (a+b+c)/2.0;
+    return sqrt((p)*(p-a)*(p-b)*(p-c));
 }
 
 int main() {
-    double a=0.0,b=0.0,c=0.0,S=0.0,P=0.0;
-    scanf("%lf",&a);
-    scanf("%lf",&b);
-    scanf("%lf",&c);
-    const int answer = function(a,b,c,&S,&P);
-    printf("%i\n",answer);
-    if (answer==0||answer==2) printf("%.6f\n%.6f\n",P,S);
+    double H=0.0,A=0.0,D=100.0,f=0.0;
+    for (double h=1;h<=3;h++)
+        for (double a=1;a<=50;a++) {
+            f = V_pyramid(h,a)/S_all(h,a);
+            printf("%.0f %.0f %f %f %f\n",h,a,V_pyramid(h,a),S_all(h,a),f);
+            if (D>abs(f)) {
+                D = abs(f);
+                H = h;
+                A = a;
+            }
+        }
+    printf("%.0f\n%.0f\n",H,A);
     return 0;
 }
