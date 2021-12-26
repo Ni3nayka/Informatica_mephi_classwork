@@ -2,31 +2,109 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define V_pyramid(h,a) (1.0/3.0*(double)S_hexagon(a)*(double)h)
-#define S_hexagon(a) (1.5*sqrt(3.0)*(double)a*(double)a)
-#define abs(a) ((double)a>1.0?(double)a-1.0:1.0-(double)a)
-#define pifagor(a,b) sqrt((double)((double)a*(double)a+(double)b*(double)b))
-#define S_all(h,a) S_gerona((double)pifagor(h,a),(double)pifagor(h,a),(double)a)*6.0+(double)S_hexagon(a)
+int ERROR = 0;
+const long int MAX_NUMBER = 2147483647;
+const long int MIN_NUMBER = -2147483648;
 
-double S_gerona(double a, double b, double c) {
-    double p = (a+b+c)/2.0;
-    return sqrt((p)*(p-a)*(p-b)*(p-c));
+long int my_abs(long int a) {
+    return a>=0?a:-a;
+}
+long int my_sign(long int a) {
+    return a==0?0:(a>0?1:-1);
+}
+long int my_sign_i(long int a) {
+    return a==0?0:(a>0?-1:1);
+}
+long int escape_test(long int a,long int d) {
+    return a==MAX_NUMBER&&d==1||a==MIN_NUMBER&&d==-1?1:0;
+}
+
+long int my_plus(long int a, long int b) {
+    if (ERROR) return 0;
+    if (a<=MAX_NUMBER-b) return a+b;
+    ERROR = 1;
+    return 0;
+}
+
+long int my_minus(long int a, long int b) {
+    if (ERROR) return 0;
+    if (a>=MIN_NUMBER+b) return a-b;
+    ERROR = 2;
+    return 0;
+}
+
+long int ksfjgsdfkjgdfkjgsjfgn(long int a, long int b) {
+    return a==0||b==0?0:(a==1&&b==1||a==-1&&b==-1?1:-1);
+}
+
+long int my_multiply(long int a, long int b) {
+    if (ERROR) return 0;
+    if (b==0) return 1;
+    else if (b==1) return a;
+    long int znak = ksfjgsdfkjgdfkjgsjfgn(my_sign(a),my_sign(b));
+    a = my_abs(a);
+    b = my_abs(b);
+    long int answer = a;
+    for (;b>1&&ERROR==0;b--) answer = my_plus(answer,a);
+    if (ERROR) ERROR = 3;
+    else answer*=znak;
+    return answer;
+}
+
+long int my_pow(long int a, long int b) {
+    if (ERROR) return 0;
+    if (b==0) return 1;
+    else if (b==1) return a;
+    long int answer = a;
+    for (;b>1&&ERROR==0;b--) answer = my_multiply(answer,a);
+    if (ERROR) ERROR = 4;
+    return answer;
+}
+
+long int my_div(long int a, long int b) {
+    if (ERROR) return 0;
+    long int answer = 0;
+    long int znak = ksfjgsdfkjgdfkjgsjfgn(my_sign(a),my_sign(b));
+    a = my_abs(a);
+    b = my_abs(b);
+    for (;a>0;answer++) a = my_minus(a,b);
+    if (a<0) answer--;
+    if (ERROR) ERROR = 5;
+    else answer*=znak;
+    return answer;
+}
+
+long int my_mod(long int a, long int b) {
+    if (ERROR) return 0;
+    long int answer = my_minus(a,my_multiply(my_div(a,b),b));
+    if (ERROR) ERROR = 6;
+    return answer;
+}
+
+long int function_1(long int a, long int b) {
+    return my_plus(my_minus(my_multiply(my_pow(a,2),b),my_multiply(b,my_minus(b,a))),b);
+}
+
+long int function_2(long int a, long int b) {
+    return my_div(my_plus(my_pow(a,3),b),b);
+}
+
+long int function_3(long int a, long int b) {
+    return my_mod(my_plus(a,my_pow(b,3)),a);
+}
+
+void print(long int a) {
+    if (ERROR) printf("!%i\n",ERROR);
+    else printf("%li\n",a);
+    ERROR = 0;
 }
 
 int main() {
-    double H=0.0,A=0.0,D=100.0,f=0.0,because_C_very_disgusting_language=0.0;
-    for (double h=1;h<=50;h++)
-        for (double a=2;a<=50;a++) {
-            because_C_very_disgusting_language = S_all(h,a);
-            f = (double)V_pyramid(h,a)/because_C_very_disgusting_language;
-            //printf("%f %f %f\n",f,V_pyramid(h,a),S_all(h,a));
-            //if (h==50 && a==50) printf("%.0f %.0f %f %f  %f Y %f %f\n",h,a,V_pyramid(h,a),S_all(h,a),f,vol(a,h),sq(a,h));
-            if (D>abs(f)) {
-                D = abs(f);
-                H = h;
-                A = a;
-            }
-        }
-    printf("%.0f\n%.0f\n",H,A);
+    long int a = 0, b = 0, test = 0;
+    scanf("%li", &a);
+    scanf("%li", &b);
+    print(function_1(a,b));
+    print(function_2(a,b));
+    print(function_3(a,b));
     return 0;
 }
