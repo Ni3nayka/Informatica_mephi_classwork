@@ -19,8 +19,6 @@ int main() {
         for (double a=2;a<=50;a++) {
             because_C_very_disgusting_language = S_all(h,a);
             f = (double)V_pyramid(h,a)/because_C_very_disgusting_language;
-            //printf("%f %f %f\n",f,V_pyramid(h,a),S_all(h,a));
-            //if (h==50 && a==50) printf("%.0f %.0f %f %f  %f Y %f %f\n",h,a,V_pyramid(h,a),S_all(h,a),f,vol(a,h),sq(a,h));
             if (D>abs(f)) {
                 D = abs(f);
                 H = h;
