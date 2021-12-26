@@ -6,61 +6,53 @@ int ERROR = 0;
 const long int MAX_NUMBER = 2147483647;
 const long int MIN_NUMBER = -2147483648;
 
-long int my_abs(long int a) {
-    return a>=0?a:-a;
-}
-long int my_sign(long int a) {
-    return a==0?0:(a>0?1:-1);
-}
-long int my_sign_i(long int a) {
-    return a==0?0:(a>0?-1:1);
-}
-long int escape_test(long int a,long int d) {
-    return a==MAX_NUMBER&&d==1||a==MIN_NUMBER&&d==-1?1:0;
-}
-
-long int my_plus(long int a, long int b) {
+long my_plus(long int si_a, long int si_b) {
     if (ERROR) return 0;
-    long int d = my_sign(b);
-    for (;b!=0;b-=d) {
-        if (escape_test(a,d)) {
-            ERROR = 1;
-            break;
-        }
-        a+=d;
+    if (((si_b > 0) && (si_a > (MAX_NUMBER - si_b))) || ((si_b < 0) && (si_a < (MIN_NUMBER - si_b)))) {
+        ERROR = 1;
+        return 0;
     }
-    return a;
+    else return si_a + si_b;
 }
 
-long int my_minus(long int a, long int b) {
+long int my_minus(long int si_a, long int si_b) {
     if (ERROR) return 0;
-    long int d = my_sign_i(b);
-    for (;b!=0;b+=d) {
-        if (escape_test(a,d)) {
-            ERROR = 1;
-            break;
-        }
-        a+=d;
+    if ((si_b > 0 && si_a < MIN_NUMBER + si_b) || (si_b < 0 && si_a > MAX_NUMBER + si_b)) {
+        ERROR = 2;
+        return 0;
     }
-    return a;
+    else return si_a - si_b;
 }
 
-long int ksfjgsdfkjgdfkjgsjfgn(long int a, long int b) {
-    return a==0||b==0?0:(a==1&&b==1||a==-1&&b==-1?1:-1);
-}
+long int my_multiply(long int si_a, long int si_b) {
+  if (ERROR) return 0;
+  if (si_a > 0) {
+    if (si_b > 0) {
+      if (si_a > (MAX_NUMBER / si_b)) {
+        ERROR = 3;
+      }
+    }
+    else {
+      if (si_b < (MIN_NUMBER / si_a)) {
+        ERROR = 3;
+      }
+    }
+  }
+  else {
+    if (si_b > 0) {
+      if (si_a < (MIN_NUMBER / si_b)) {
+        ERROR = 3;
+      }
+    }
+    else {
+      if ( (si_a != 0) && (si_b < (MAX_NUMBER / si_a))) {
+        ERROR = 3;
+      }
+    }
+  }
 
-long int my_multiply(long int a, long int b) {
-    if (ERROR) return 0;
-    if (b==0) return 1;
-    else if (b==1) return a;
-    long int znak = ksfjgsdfkjgdfkjgsjfgn(my_sign(a),my_sign(b));
-    a = my_abs(a);
-    b = my_abs(b);
-    long int answer = a;
-    for (;b>1&&ERROR==0;b--) answer = my_plus(answer,a);
-    if (ERROR) ERROR = 3;
-    else answer*=znak;
-    return answer;
+  if (ERROR) return 0;
+  else return si_a * si_b;
 }
 
 long int my_pow(long int a, long int b) {
@@ -75,22 +67,20 @@ long int my_pow(long int a, long int b) {
 
 long int my_div(long int a, long int b) {
     if (ERROR) return 0;
-    long int answer = 0;
-    long int znak = ksfjgsdfkjgdfkjgsjfgn(my_sign(a),my_sign(b));
-    a = my_abs(a);
-    b = my_abs(b);
-    for (;a>0;answer++) a = my_minus(a,b);
-    if (a<0) answer--;
-    if (ERROR) ERROR = 5;
-    else answer*=znak;
-    return answer;
+    if (b==0) {
+        ERROR = 5;
+        return 0;
+    }
+    return a/b;
 }
 
 long int my_mod(long int a, long int b) {
     if (ERROR) return 0;
-    long int answer = my_minus(a,my_multiply(my_div(a,b),b));
-    if (ERROR) ERROR = 6;
-    return answer;
+    if (b==0) {
+        ERROR = 6;
+        return 0;
+    }
+    return a-(a/b)*b;
 }
 
 long int function_1(long int a, long int b) {
@@ -112,7 +102,7 @@ void print(long int a) {
 }
 
 int main() {
-    long int a = 0, b = 0, test = 0;
+    long int a = 0, b = 0;
     scanf("%li", &a);
     scanf("%li", &b);
     print(function_1(a,b));
