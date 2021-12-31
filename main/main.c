@@ -2,38 +2,50 @@
 #include <stdlib.h>
 #include <math.h>
 
-int ERROR = 0;
-const long int MAX_NUMBER = 2147483647;
-const long int MIN_NUMBER = -2147483648;
+long int pow1(long int a, long int b) {
+    if (b==0) return 1;
+    else if (b==1) return a;
+    long int answer = a;
+    for (;b>1;b--) answer *= a;
+    return answer;
+}
 
-long int my_plus(long int si_a, long int si_b) {
-    if (ERROR) return 0;
-    if (((si_b > 0) && (si_a > (MAX_NUMBER - si_b))) || ((si_b < 0) && (si_a < (MIN_NUMBER - si_b)))) {
-        ERROR = 1;
-        return 0;
+long int convect_to_10(long int t) {
+    if (t==0) return 0;
+    int znak = t>0?1:-1;
+    long int answer = 0;
+    t *= znak;
+    for (long int i = 0; t>0; i++) {
+        answer += (t%10)*pow1(5,i);
+        t /= 10;
     }
-    else return si_a + si_b;
+    answer *= znak;
+    return answer;
 }
 
-long int F(long int n_last_1, long int n_last_2, int i) {
-    long int t = my_plus(n_last_1,n_last_2);
-    // comment - the requirement of the second task
-    //printf("%i) %i %i %i\n",i,n_last_1,n_last_2,t);
-    if (ERROR) return 0;
-    else if (i==0) return t;
-    else return F(n_last_2,t,i-1);
-
+int convect_to_5(long int t, long int *answer) {
+    if (t==0) return 0;
+    int znak = t>0?1:-1;
+    *answer = 0;
+    t *= znak;
+    if (t>4687499 || t<-4687499) { *answer = 0; return 0; }
+    for (long int i = 0; t>0; i++) {
+        *answer += t%5*pow1(10,i);
+        t /= 5;
+    }
+    *answer *= znak;
+    return 1;
 }
+
 
 int main() {
-    long int n=0;
-    scanf("%i",&n);
-    if (n==1) printf("1\n");
-    else if (n==2) printf("3\n");
-    else {
-        n = F(1,3,n-3);
-        if (ERROR) printf("!\n");
-        else printf("%i\n",n);
-    }
+    long int a = 0, b = 0;
+    int test = 1;
+    scanf("%li", &a);
+    scanf("%li", &b);
+    printf("%li\n",convect_to_10(a));
+    test = convect_to_5(b,&b);
+    if (test) printf("%li\n",b);
+    else printf("%!\n");
     return 0;
 }
