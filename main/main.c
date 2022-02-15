@@ -1,26 +1,36 @@
 #include <stdio.h>
 
-int main() {
-    const int N = 10;
-    int A[10] = {0};
-    int count = 0;
-    for (int i = 0; i<10; i++) {
-        scanf("%i",&A[i]);
-    }
-    for (int i = 0; i<10; i++) {
-        count = 0;
-        for (int u = 0; u<10; u++) {
-            if (A[u]==A[i]) {
-                count++;
-            }
-        }
-        if (count==1) {
-            printf("%4i",A[i]);
-        }
-        else {
-            printf("   0");
-        }
+void print(int a[], int n) {
+    for (int i=1;i<=n;i++) {
+        printf("%5i",i);
     }
     printf("\n");
+    for (int i=0;i<n;i++) {
+        printf("%5i",a[i]);
+    }
+    printf("\n");
+}
+
+void completion(int m[], int n, int a, int b) {
+    for (int i=0;i<n;i++) {
+        m[i] = a*(i-b);
+    }
+}
+
+int main() {
+    int M1[14]={1,2,3,4};
+    int M2[10]={1,2,3,4};
+
+    int a1=0,b1=0,a2=0,b2=0;
+    scanf("%i %i",&a1,&b1);
+    scanf("%i %i",&a2,&b2);
+
+    completion(M1,14,a1,b1);
+    completion(M2,10,a2,b2);
+
+    print(M1,14);
+    printf("\n");
+    print(M2,10);
+
     return 0;
 }
