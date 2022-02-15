@@ -1,36 +1,64 @@
 #include <stdio.h>
 
-void print(int a[], int n) {
-    for (int i=1;i<=n;i++) {
-        printf("%5i",i);
-    }
-    printf("\n");
+#define M1_N 5
+#define M2_N 6
+#define M3_N 8
+
+void zero(int m[], int n) {
     for (int i=0;i<n;i++) {
-        printf("%5i",a[i]);
+        m[i] = 0;
     }
-    printf("\n");
 }
 
-void completion(int m[], int n, int a, int b) {
+void input(int m[], int n) {
     for (int i=0;i<n;i++) {
-        m[i] = a*(i-b);
+        scanf("%i",&m[i]);
     }
+}
+
+void randoming(int m[], int n, int a, int b) {
+    for (int i=0;i<n;i++) {
+        m[i] = rand()%(b-a)+a;
+    }
+}
+
+void print(int m[], int n) {
+    for (int i=0;i<n-1;i++) {
+        printf("%i ",m[i]);
+    }
+    printf("%i\n",m[n-1]);
+}
+
+int summary(int a[], int n) {
+    int summ = 0;
+    for (int i=0;i<n;i++) {
+        summ += a[i];
+    }
+    return summ;
+}
+
+float average(int m[], int a, int b) {
+    int summ = 0;
+    for (int i=a-1;i<b;i++) {
+        summ += m[i];
+    }
+    return summ/(float)(b-a+1);
 }
 
 int main() {
-    int M1[14]={1,2,3,4};
-    int M2[10]={1,2,3,4};
+    //int M1[M1_N]={0},M2[M2_N]={0},M3[M3_N]={0},a=0,b=0;
+    int M1[M1_N]={14,12,13,10,12};
+    int M2[M2_N]={10,14,12,10,12,15};
+    int M3[M3_N]={13,12,11,15,11,14,11,13};
+    int a=4,b=8;
 
-    int a1=0,b1=0,a2=0,b2=0;
-    scanf("%i %i",&a1,&b1);
-    scanf("%i %i",&a2,&b2);
+    //input(M1,M1_N);
+    //input(M2,M2_N);
+    //input(M3,M3_N);
+    //scanf("%i %i",&a,&b);
 
-    completion(M1,14,a1,b1);
-    completion(M2,10,a2,b2);
-
-    print(M1,14);
-    printf("\n");
-    print(M2,10);
+    printf("%i %i %i\n",summary(M1,M1_N),summary(M2,M2_N),summary(M3,M3_N));
+    printf("%.1f\n",average(M3,a,b));
 
     return 0;
 }
