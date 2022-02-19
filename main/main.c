@@ -37,12 +37,19 @@ int summary(int a[], int n) {
     return summ;
 }
 
-float average(int m[], int a, int b) {
+float average(int *mas, int *end) {
     int summ = 0;
-    for (int i=a-1;i<b;i++) {
-        summ += m[i];
+    int i = 0;
+    while (mas<end) {
+        summ += *mas;
+        mas++;
+        i+=1;
     }
-    return summ/(float)(b-a+1);
+    return summ/(float)i;
+}
+
+bool test_number(int a[], int n) {
+
 }
 
 int main() {
@@ -58,7 +65,7 @@ int main() {
     //scanf("%i %i",&a,&b);
 
     printf("%i %i %i\n",summary(M1,M1_N),summary(M2,M2_N),summary(M3,M3_N));
-    printf("%.1f\n",average(M3,a,b));
+    printf("%.1f\n",average(M3+a-1,M3+b-1));
 
     return 0;
 }
