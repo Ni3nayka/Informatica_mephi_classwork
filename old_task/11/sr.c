@@ -46,7 +46,7 @@ float average(int *mas, int *end) {
         mas++;
         i+=1;
     }
-    return summ/(float)(i+1);
+    return summ/(float)i;
 }
 
 void test_number(int a[], int n, int *list) {
@@ -65,7 +65,7 @@ int main() {
     scanf("%i %i",&a,&b);
 
     printf("%i %i %i\n",summary(M1,M1_N),summary(M2,M2_N),summary(M3,M3_N));
-    printf("%.1f\n",average(M3+a-1,M3+b));
+    printf("%.1f\n",average(M3+a-1,M3+b-1));
 
     test_number(M1,M1_N,test_1);
     test_number(M2,M2_N,test_2);
@@ -84,4 +84,3 @@ int main() {
 
     return 0;
 }
-
