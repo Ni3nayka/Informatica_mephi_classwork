@@ -14,7 +14,7 @@ int number(char a) {
     return 0;
 }
 
-int maln() {
+int main() {
     int sum[30] = {0};
     int flag = 0;
     int cache = 0;
@@ -86,11 +86,5 @@ int maln() {
     }
     printf("\n");
     //fclose(file);
-    return 0;
-}
-
-int main() {
-    for (int i=0;i<110;i++) getchar();
-    printf("2 4\n");
     return 0;
 }
