@@ -1,58 +1,61 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void print(int *a, int n) {
+    for (int i=0; i<n; ++i) {
+        printf("%3i",i+1);
+    }
+    printf("\n");
+    for (int i=0; i<n; ++i) {
+        printf("%3i",*(a+i));
+    }
+    printf("\n");
+}
+
+void QuickSort(int *A, int first, int last, int N) {
+    int cache = 0;
+    int l=first, r=last;
+    int pivot=A[(l+r)/2];
+    while (l<=r) {
+        while (A[l]<pivot) {
+            l++;
+        }
+        while (A[r]>pivot) {
+            r--;
+        }
+        if (l<=r) {
+            cache = A[r];
+            A[r] = A[l];
+            A[l] = cache;
+            l++;
+            r--;
+        }
+    }
+    printf("\n");
+    print(A, N);
+    if (first<r) {
+        QuickSort(A, first,r,N);
+    }
+    if (l<last) {
+        QuickSort(A, l,last,N);
+    }
+}
+
+
 int main() {
-    int i=0,n=10,k=4,i1=3;
-    int *array, *array_2;
+    int n = 7, cache = 0, l = 0, r = 6, pivot = 0;//, *array;
+    int array[7] = {5,9,3,7,4,1,2};
+    pivot=array[(l+r)/2];
 
-    scanf("%d", &n);
+    /*scanf("%d", &n);
     array = (double *) malloc(n * sizeof (double));
-    for (i=0; i<n; ++i) {
+    for (int i=0; i<n; ++i) {
         scanf("%d", &array[i]);
-    }
-    scanf("%d", &k);
-    scanf("%d", &i1);
+    }*/
 
-    if (array == NULL) {
-        printf("ERROR: memory");
-        exit(EXIT_FAILURE);
-    }
+    print(array, n);
 
-    for (i=0; i<n; ++i) {
-        printf("%3i",i+1);
-    }
-    printf("\n");
-    for (i=0; i<n; ++i) {
-        printf("%3i",array[i]);
-    }
-    printf("\n");
-    printf("\n");
+    QuickSort(&array, 0, n-1, n);
 
-    for (i=k-1; i<n-1; ++i) {
-        array[i] = array[i+1];
-    }
-    n--;
-    array_2 = (int *) realloc(array, n * sizeof (int));
-    if (array_2 == NULL) {
-        printf("ERROR: memory");
-        exit(EXIT_FAILURE);
-    }
-    else {
-        array = array_2;
-    }
-    i1--;
-    k = array[i1];
-    array[i1] = array[0];
-    array[0] = k;
-
-    for (i=0; i<n; ++i) {
-        printf("%3i",i+1);
-    }
-    printf("\n");
-    for (i=0; i<n; ++i) {
-        printf("%3i",array[i]);
-    }
-    printf("\n");
-    free(array);
     return 0;
 }
