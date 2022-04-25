@@ -1,152 +1,52 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-void print_array(int *A, int n) {
-    for (int i=0; i<n; ++i) {
-        printf("%3i",i+1);
+struct Student
+{
+    char SurName[15];
+    char Name[15];
+    int Kurs;
+    int MMath;
+    int MPhiz;
+    int MInf;
+};
+
+void scan(char SurName[], char Name[], int Kurs, int MMath, int MPhiz, int MInf)
+{
+    char c;
+    int i=0;
+    while(1){
+        scanf("%c",&c);
+        if(c==' ') break;
+        SurName[i]=c;
+        i++;
     }
-    printf("\n");
-    for (int i=0; i<n; ++i) {
-        printf("%3i",*(A+i));
+    i=0;
+    while(1){
+        scanf("%c",&c);
+        if(c==' ') break;
+        Name[i]=c;
+        i++;
     }
-    printf("\n");
+    scanf("%d %d %d %d",&Kurs,&MMath,&MPhiz,&MInf);
 }
 
-void write_array_to_file(int *A, int N) {
-    FILE *file;
-    file = fopen("output.txt","w");
-    fprintf(file, "%i\n", N);
-    for (int i = 0; i<N; i++) {
-         fprintf(file, "%i ", A[i]);
-    }
-    fprintf(file, "\n");
-    fclose(file);
+void Print (char SurName[], char Name[], int Kurs, int MMath, int MPhiz, int MInf)
+{
+    for(int i=0;i<15;i++) printf("%c",SurName[i]);
+    for(int i=0;i<15;i++) printf("%c",Name[i]);
+    printf("%5d%5d%5d%5d",Kurs,MMath,MPhiz,MInf);
 }
 
-int read_array_from_file(int *N) {
-    int *A;
-    FILE *file;
-    file = fopen("input.txt","r");
-    fscanf(file, "%i", N);
-    A = (int *) malloc(*N * sizeof (int));
-    for (int i = 0; i<*N; i++) {
-         fscanf(file, "%i", &A[i]);
-    }
-    fclose(file);
-    return A;
-}
-
-void del_region_from_array(int *A, int *N, int a, int b) {
-    int *B;
-    b++;
-    for (int i = a; i<*N-b+a; i++) {
-        A[i] = A[i+b-a];
-    }
-    *N = *N-b+a;
-    B = (int *) realloc(A, *N * sizeof (int));
-    if (B == NULL) {
-        printf("ERROR: memory");
-        exit(EXIT_FAILURE);
-    }
-    else {
-        A = B;
-    }
-}
-
-void add_region_in_array(int *A, int *N, int a, int *b, int n_b) {
-    int *B;
-    a++;
-    *N = *N+n_b;
-    B = (int *) realloc(A, *N * sizeof (int));
-    if (B == NULL) {
-        printf("ERROR: memory");
-        exit(EXIT_FAILURE);
-    }
-    else {
-        A = B;
-    }
-    for (int i = *N-1; i>a; i--) {
-        A[i] = A[i-n_b];
-    }
-    for (int i = 0; i<n_b; i++) {
-        A[i+a] = b[i];
-    }
-}
+int main()
+{
+    int n;
+    scanf("%d",&n);
+    struct Student mus[n];
+    for(int i=0;i<n;i++) scan(mus[i].SurName,mus[i].Name,mus[i].Kurs,mus[i].MMath,mus[i].MPhiz,mus[i].MInf);
+    for(int i=0;i<n;i++) Print(mus[i].SurName,mus[i].Name, mus[i].Kurs,mus[i].MMath,mus[i].MPhiz,mus[i].MInf);
 
 
-int generate_array(int N) {
-    srand(time(NULL));
-    int *A;
-    A = (int *) malloc(N * sizeof (int));
-    for (int i=0; i<N; ++i) {
-        A[i] = rand()%10;
-    }
-    return A;
-}
 
-int main() {
-int i=0,n=10,k=4,i1=3;
-    int *array, *array_2;
-
-    scanf("%d", &n);
-    array = (double *) malloc(n * sizeof (double));
-    for (i=0; i<n; ++i) {
-        scanf("%d", &array[i]);
-    }
-    scanf("%d", &k);
-    scanf("%d", &i1);
-
-    if (array == NULL) {
-        printf("ERROR: memory");
-        exit(EXIT_FAILURE);
-    }
-
-    print_array(array,n);
-    printf("\n");
-
-    for (i=k-1; i<n-1; ++i) {
-        array[i] = array[i+1];
-    }
-    n--;
-    array_2 = (int *) realloc(array, n * sizeof (int));
-    if (array_2 == NULL) {
-        printf("ERROR: memory");
-        exit(EXIT_FAILURE);
-    }
-    else {
-        array = array_2;
-    }
-    i1--;
-    k = array[i1];
-    array[i1] = array[0];
-    array[0] = k;
-
-    print_array(array,n);
-    // WRITE FILE
-    //write_array_to_file(array,n);
-    free(array);
-
-    // READ FILE
-    /*array = read_array_from_file(&n);
-    print_array(array,n);
-    free(array);*/
-
-    // DELETE IN ARRAY
-    /*del_region_from_array(array, &n, 2,4);
-    print_array(array, n);*/
-
-    // ADD IN ARRAY
-    /*int *add_array, size_add_array = 3;
-    add_array = (int *) malloc(size_add_array * sizeof (int));
-    add_array[0] = 3;
-    add_array[1] = 45;
-    add_array[2] = 89;
-    print_array(add_array, size_add_array);
-    print_array(array, n);
-    add_region_in_array(array, &n, 2,add_array,size_add_array);
-    print_array(array, n);
-    free(array);
-    free(array_2);*/
 
     return 0;
 }
