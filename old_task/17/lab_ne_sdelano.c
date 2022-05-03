@@ -35,7 +35,7 @@ int *read(int *y, int *x) {
         }
     }
     else {
-        scanf("%d %d", y, x);
+        scanf("%d %d", x, y);
         array = mem((*x)*(*y));
         input(array, (*x)*(*y));
     }
@@ -57,7 +57,7 @@ int *ugly_number(int *a, int y, int x) {
 }
 
 int main() {
-    int max = 0, f = 0, x = 0, y = 0, *array;
+    int max = -9999, f = 0, x = 0, y = 0, *array;
     srand(time(NULL));
 
     array = read(&y, &x);
