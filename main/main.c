@@ -46,10 +46,11 @@ int *read(int *n) {
 }
 
 int main() {
-    char a[2][3] = {1,2,3,4,5,6};
+    char m[3][2] = {1,2,3,4,5,6};
 
-    printf("%i\n",a[1]);
-    printf("%i\n",*a+3);
+    printf("%i\n",*m[1]);
+    printf("%i\n",*m+2);
+//    printf("%i\n",);
 
     return 0;
 }
