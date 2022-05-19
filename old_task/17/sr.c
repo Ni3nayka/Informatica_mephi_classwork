@@ -92,7 +92,7 @@ int main() {
 
     array = read(&n);
 
-    print_mas(array, n,n);
+    print_mas_1(array, n,n);
     printf("\n");
     answer = multiply(array,array,n);
     answer = transonting(answer,n);
