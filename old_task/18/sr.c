@@ -1,132 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define DEBUG 1
-#define FILE_FLAG 1
+#define DEBUG 0
+#define FILE_FLAG 0
 
-#define SIZE 7
+#define SIZE 25
 #define char_size 25
-
-void print(int *a, int n) {
-    int flag = 0;
-    for (int i=0; i<n; i++) {
-        if (*(a+i)==0) {
-            if (flag==0) {
-                printf("!\n");
-                flag = 1;
-            }
-        }
-        else {
-            printf("%c",*(a+i));
-        }
-    }
-    printf("\n");
-}
-
-int *mem(int rm) {
-    int *massiv;
-    massiv=(int*)calloc(rm,sizeof(char));
-    return massiv;
-}
-
-int input(int size) {
-    int *mas;
-    mas = mem(size*char_size);
-
-    FILE *file;
-    char buffer[char_size];
-
-    if (FILE_FLAG) {
-        file = fopen("input.txt","r");
-        //fscanf(file, "%d", &size);
-        //fgets ( buffer, char_size, file);
-    }
-    //else {
-        //scanf("%d",&size);
-        //gets(buffer);
-    //}
-
-    for (int i = 0; i<size; i++) {
-        if (FILE_FLAG) {
-            fgets ( buffer, char_size, file);
-        }
-        else {
-            gets(buffer);
-        }
-        if (DEBUG) {
-            printf("%s",buffer);
-        }
-        for (int u = 0; u<char_size; u++) {
-            mas[i*char_size+u] = buffer[u];
-        }
-    }
-
-    if (FILE_FLAG) {
-        fclose(file);
-    }
-
-    //for(int i=0;i<rm;i++) {
-    //    scanf("%d",mas+i);
-    //}
-    return mas;
-}
-
-int *read(int *n) {
-    int *array;
-    if (DEBUG) {
-        *n = rand()%5 + 5;
-        array = mem(*n);
-        for (int i=0; i<*n; ++i) {
-            array[i] = rand()%10;
-        }
-    }
-    else {
-        scanf("%d", n);
-        array = mem(*n);
-        //input(array, *n);
-    }
-    return array;
-}
-
-int *read_1(int *n) {
-    int test[8] = {19,15,12,10,8,4,4,3};
-    int *array;
-    *n = 8;
-    array = mem(*n);
-    for(int i=0;i<*n;i++) {
-        array[i] = test[i];
-    }
-    return array;
-}
-
-int *read_2(int *n) {
-    int test[7] = {1,4,7,8,15,15,16};
-    int *array;
-    *n = 7;
-    array = mem(*n);
-    for(int i=0;i<*n;i++) {
-        array[i] = test[i];
-    }
-    return array;
-}
-
-int *operating(int *array_1,int n_1,int *array_2,int n_2,int *n) {
-    int *array, n_11 = 0;
-    *n = n_1 + n_2;
-    n_2--;
-    array = mem(*n);
-    for(int i=0;i<*n;i++) {
-        if (array_1[n_11]>=array_2[n_2] && n_11<n_1) {
-            array[i] = array_1[n_11];
-            n_11++;
-        }
-        else {
-            array[i] = array_2[n_2];
-            n_2--;
-        }
-    }
-    return array;
-}
+#define buffer_size 200
+//#define subject_size 10
+//#define city_size 10
 
 struct one_data {
     char name[char_size],surname[char_size],city[char_size],street[char_size],subject[char_size];
@@ -238,10 +120,8 @@ void cities(int size) {
 }
 
 int main() {
-    int *array;
-    array = input(SIZE);
-    print(array,SIZE*char_size);
-    /*int size = 0;
+    int size = 0;
+    char buffer[buffer_size];
     int counter = 0;
     int I = 0;
     int flag = 1;

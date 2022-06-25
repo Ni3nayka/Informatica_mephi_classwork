@@ -10,11 +10,11 @@ struct one_data {
     int cpu,hdd,system_po,work_po;
 };
 
-
 int main() {
     int size = 0;
     char buffer[40];
     int counter = 0;
+    int max = 0;
 
     struct one_data array[SIZE];
     for (int i = 0; i<SIZE; i++) {
@@ -89,7 +89,19 @@ int main() {
     }
     printf("\n");
 
-    printf("\n");
+    for (int i = 0; i<size; i++) {
+        if (array[i].cpu>=2000 && max<array[i].hdd-array[i].system_po-array[i].work_po) {
+            max = array[i].hdd-array[i].system_po-array[i].work_po;
+        }
+    }
+    for (int i = 0; i<size; i++) {
+        if (max==array[i].hdd-array[i].system_po-array[i].work_po) {
+            for (int u = 0; u<15&&array[i].name[u]!=' '; u++) {
+                printf("%c",array[i].name[u]);
+            }
+            printf("\n");
+        }
+    }
 
     return 0;
 }
